@@ -1,0 +1,4 @@
+CREATE TABLE addresses (
+	id BIGINT AUTO_INCREMENT,
+	city VARCHAR(255),
+	CONSTRAINT pk_addresses PRIMARY KEY (id));

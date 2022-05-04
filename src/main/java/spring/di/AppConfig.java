@@ -1,6 +1,7 @@
 package spring.di;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
+import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
@@ -19,11 +20,16 @@ public class AppConfig {
     public DataSource dataSource(){
         MysqlDataSource dataSource = new MysqlDataSource();
         dataSource.setURL(environment.getProperty("jdbc.url"));
-//        dataSource.setURL("jdbc:mysql://localhost:3306/employees?useUnicode=true");
         dataSource.setUser(environment.getProperty("jdbc.username"));
-//        dataSource.setUser("root");
         dataSource.setPassword(environment.getProperty("jdbc.password"));
-//        dataSource.setPassword("Test123!");
         return dataSource;
+    }
+
+    @Bean
+    public Flyway flyway(){
+        Flyway flyway = new Flyway();
+        flyway.setDataSource(dataSource());
+        flyway.migrate();
+        return flyway;
     }
 }
