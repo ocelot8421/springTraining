@@ -24,16 +24,24 @@ public class EmployeeDaoTest {
     private EmployeeDao employeeDao;
 
     @Before
-    public void init(){
+    public void init() {
         flyway.clean();
         flyway.migrate();
     }
 
     @Test
-    public void testCreateThenList(){
-        employeeDao.createEmployee("Hajni");
+    public void testCreateThenList() {
+        employeeDao.createEmployee("Veréb");
         List<String> employees = employeeDao.listEmployeeNames();
 
-        assertEquals(Arrays.asList("Hajni"), employees);
+        assertEquals(Arrays.asList("Veréb"), employees);
+    }
+
+    @Test
+    public void testThenFind() {
+        long id = employeeDao.createEmployee("Bari");
+        System.out.println(id);
+        String name = employeeDao.findEmployeeNameById(id);
+        assertEquals("Bari", name);
     }
 }
